@@ -7,6 +7,8 @@ package concurrentprogramming;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.Random;
 
 
 /**
@@ -22,13 +24,24 @@ public class ConcurrentProgramming {
         int n = 5;
         int t;
         int m;
+        int count =0;
+        double xaxis,yaxis;
+        
         HashMap<Double, Double> map = new HashMap<>();
+        
         ArrayList<Point> pointArr = new ArrayList<>();
-        
-        GeneratePoint generate = new GeneratePoint(n, map, pointArr);
-        generate.start();
-        
-
+        while(count < n ){
+            Random coor = new Random();
+            xaxis = (double)coor.nextInt(1001)+((double)coor.nextInt(100)/100);
+            yaxis = (double)coor.nextInt(1001)+((double)coor.nextInt(100)/100);
+            if (!Objects.equals(map.get(xaxis), yaxis)){
+                map.put(xaxis, yaxis);
+                pointArr.add(new Point(xaxis, yaxis));
+                count++;
+            }
+            
+        }
+        System.out.println(pointArr);
     }
     
 }
