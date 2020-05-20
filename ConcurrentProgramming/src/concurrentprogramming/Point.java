@@ -14,14 +14,23 @@ import java.util.ArrayList;
 public class Point {
     Double xaxis;
     Double yaxis;
+    Boolean isPair;
 
     public Point(Double x, Double y) {
         xaxis = x;
         yaxis = y;
+        isPair = false;
+    }
+    
+    public String isPair(){
+        if(isPair)
+            return "Paired";
+        else
+            return "Not Paired";
     }
     
     public String toString(){
-        return "("+xaxis+", "+yaxis+")";
+        return "("+xaxis+", "+yaxis+": "+isPair()+" )";
     }
     
 }
