@@ -25,9 +25,9 @@ public class ConcurrentProgramming {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int n = 5000; //number of points
+        int n = 50000; //number of points
         int t = 7;  // number of threads
-        int m = 5;  // number of seconds to termination
+        int m = 2;  // number of seconds to termination
         int count =0;
         double xaxis,yaxis;
         
@@ -78,7 +78,7 @@ public class ConcurrentProgramming {
         } catch (InterruptedException ex) {
             System.out.println("Termination interrupted");
         }
-        
+
 //        System.out.println(pointArr);
         System.out.println();
         System.out.println(fail);

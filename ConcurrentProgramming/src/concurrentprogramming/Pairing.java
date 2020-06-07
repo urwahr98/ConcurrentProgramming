@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -44,7 +46,7 @@ public class Pairing implements Runnable{
             // +1 to succesful number of the thread
             //if paired, +1 to failure number of the thread
             //find another point to pair with
-            if (pointArr.get(first).isPair.get()){
+            if (pointArr.get(first).isPair.get()){              
                 if (fail.containsKey(String.valueOf(Thread.currentThread().getId()))){
                     fail.put(String.valueOf(Thread.currentThread().getId()),fail.get(String.valueOf(Thread.currentThread().getId()))+1);
                     if(fail.get(String.valueOf(Thread.currentThread().getId())) >= 20){
@@ -56,9 +58,14 @@ public class Pairing implements Runnable{
             }else {
                 pointArr.get(first).isPair.set(true);
                 boolean loop = true;
-                while(loop){
+                while(loop || !stopCriteria.get()){
+                    try {
+                        Thread.sleep(5);
+                    } catch (InterruptedException ex) {
+                        System.out.println("Sleep Interrupted");;
+                    }
                     int second = ran.nextInt(pointArr.size());
-                    if (pointArr.get(second).isPair.get()){
+                    if (pointArr.get(second).isPair.get()){                          
                         if (fail.containsKey(String.valueOf(Thread.currentThread().getId()))){
                             fail.put(String.valueOf(Thread.currentThread().getId()),fail.get(String.valueOf(Thread.currentThread().getId()))+1);
                             if(fail.get(String.valueOf(Thread.currentThread().getId())) >= 20){
@@ -70,7 +77,7 @@ public class Pairing implements Runnable{
                     }
                     }else{
                         pointArr.get(second).isPair.set(true);
-                        System.out.println("Thread "+Thread.currentThread().getId()+" paired Successfully!");
+//                        System.out.println("Thread "+Thread.currentThread().getId()+" created an edge!");
                         if (success.containsKey(String.valueOf(Thread.currentThread().getId()))){
                             success.put(String.valueOf(Thread.currentThread().getId()),success.get(String.valueOf(Thread.currentThread().getId()))+1);
                             loop=false;
