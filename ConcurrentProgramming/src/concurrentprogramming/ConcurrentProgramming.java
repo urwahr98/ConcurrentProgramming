@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -21,17 +27,24 @@ public class ConcurrentProgramming {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int n = 5;
-        int t;
-        int m;
+        int n = 5000; //number of points
+        int t = 7;  // number of threads
+        int m = 5;  // number of seconds to termination
         int count =0;
         double xaxis,yaxis;
+        
+        //To stop all the thread if any of the thread fail 20 times
+        AtomicBoolean stopCriteria = new AtomicBoolean(false);
         
         //Hashmap to store the coordinates of Points
         HashMap<Double, Double> map = new HashMap<>();
         
         //Arraylist to store the Point created
         ArrayList<Point> pointArr = new ArrayList<>();
+        
+        //to store the number of success and failure of each thread
+        HashMap<String, Integer> success = new HashMap<>();
+        HashMap<String, Integer> fail = new HashMap<>();
         
         //Creating n numbers of Point
         while(count < n ){
@@ -52,8 +65,33 @@ public class ConcurrentProgramming {
             }
         }
         
+        //create a pool with t number of threads
+        ExecutorService executorService = Executors.newFixedThreadPool(t);
         
-        System.out.println(pointArr);
+        //submit t number of thread into the pool
+        for(int i=0; i<t; i++)
+            executorService.execute(new Pairing(pointArr, success, fail, stopCriteria));
+        
+        
+        executorService.shutdown();
+        // wait for m seconds before terminating
+        try {
+            executorService.awaitTermination(m, TimeUnit.SECONDS);
+        } catch (InterruptedException ex) {
+            System.out.println("Termination interrupted");
+        }
+        
+        
+//        Point p1 = new Point(32.1,21.0);
+//        p1.isPair = true;
+//        System.out.println(p1);
+        
+//        System.out.println(pointArr);
+        System.out.println(fail);
+        System.out.println(success);
+//        for (String j : fail.keySet()) {
+//        System.out.println("key: " + j + " value: " + fail.get(j));
+//    }
     }
     
 }

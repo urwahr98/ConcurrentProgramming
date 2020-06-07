@@ -5,7 +5,8 @@
  */
 package concurrentprogramming;
 
-import java.util.ArrayList;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  *
@@ -14,16 +15,18 @@ import java.util.ArrayList;
 public class Point {
     Double xaxis;
     Double yaxis;
-    Boolean isPair;
+    AtomicBoolean isPair;
 
     public Point(Double x, Double y) {
         xaxis = x;
         yaxis = y;
-        isPair = false;
+        
+        //to prevent race condition
+        isPair = new AtomicBoolean(false);
     }
     
     public String isPair(){
-        if(isPair)
+        if(isPair.get())
             return "Paired";
         else
             return "Not Paired";
