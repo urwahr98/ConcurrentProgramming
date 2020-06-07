@@ -13,8 +13,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -81,25 +79,16 @@ public class ConcurrentProgramming {
             System.out.println("Termination interrupted");
         }
         
-        
-//        Point p1 = new Point(32.1,21.0);
-//        p1.isPair = true;
-//        System.out.println(p1);
-        
 //        System.out.println(pointArr);
-//        System.out.println(fail);
-//        System.out.println(success);
-System.out.println("");
+        System.out.println();
         System.out.println(fail);
         System.out.println(success);
-for(String j : fail.keySet()) {
-System.out.println("Thread " + j + " -> "+" number of failure: " + fail.get(j));
-    }
-for(String j : success.keySet()) {
-System.out.println("Thread " + j + " -> "+" number of successfully paired: " + success.get(j));
+        for(String j : fail.keySet()) 
+        System.out.println("Thread " + j + " -> "+" number of failure: " + fail.get(j));
+        System.out.println();
+        for(String j : success.keySet()) 
+        System.out.println("Thread " + j + " -> "+" number of Edges created: " + success.get(j));
         
-        
-    }
     
     }
 }
