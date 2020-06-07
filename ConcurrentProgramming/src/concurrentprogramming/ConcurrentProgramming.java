@@ -87,11 +87,19 @@ public class ConcurrentProgramming {
 //        System.out.println(p1);
         
 //        System.out.println(pointArr);
+//        System.out.println(fail);
+//        System.out.println(success);
+System.out.println("");
         System.out.println(fail);
         System.out.println(success);
-//        for (String j : fail.keySet()) {
-//        System.out.println("key: " + j + " value: " + fail.get(j));
-//    }
+for(String j : fail.keySet()) {
+System.out.println("Thread " + j + " -> "+" number of failure: " + fail.get(j));
+    }
+for(String j : success.keySet()) {
+System.out.println("Thread " + j + " -> "+" number of successfully paired: " + success.get(j));
+        
+        
     }
     
+    }
 }
