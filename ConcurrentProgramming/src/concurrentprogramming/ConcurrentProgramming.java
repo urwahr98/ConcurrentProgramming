@@ -25,9 +25,9 @@ public class ConcurrentProgramming {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int n = 50000; //number of points
-        int t = 7;  // number of threads
-        int m = 2;  // number of seconds to termination
+        int n = 70000; //number of points
+        int t = 5;  // number of threads
+        int m = 3;  // number of seconds to termination
         int count =0;
         double xaxis,yaxis;
         
@@ -70,7 +70,7 @@ public class ConcurrentProgramming {
         for(int i=0; i<t; i++)
             executorService.execute(new Pairing(pointArr, success, fail, stopCriteria));
         
-        
+        long timeNow = System.currentTimeMillis();
         executorService.shutdown();
         // wait for m seconds before terminating
         try {
@@ -78,11 +78,13 @@ public class ConcurrentProgramming {
         } catch (InterruptedException ex) {
             System.out.println("Termination interrupted");
         }
+        long timeRunning = System.currentTimeMillis()- timeNow;
 
 //        System.out.println(pointArr);
         System.out.println();
-        System.out.println(fail);
-        System.out.println(success);
+        System.out.println("Thread ran for "+timeRunning+"ms\n");
+//        System.out.println(fail);
+//        System.out.println(success);
         for(String j : fail.keySet()) 
         System.out.println("Thread " + j + " -> "+" number of failure: " + fail.get(j));
         System.out.println();

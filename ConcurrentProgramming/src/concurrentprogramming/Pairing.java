@@ -59,10 +59,11 @@ public class Pairing implements Runnable{
                 pointArr.get(first).isPair.set(true);
                 boolean loop = true;
                 while(loop || !stopCriteria.get()){
+                    //added sleep to give chance to other thread to work
                     try {
                         Thread.sleep(5);
                     } catch (InterruptedException ex) {
-                        System.out.println("Sleep Interrupted");;
+                        System.out.println("Sleep Interrupted");
                     }
                     int second = ran.nextInt(pointArr.size());
                     if (pointArr.get(second).isPair.get()){                          
