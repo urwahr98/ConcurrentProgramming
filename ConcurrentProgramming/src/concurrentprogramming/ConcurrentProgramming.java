@@ -13,11 +13,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 
 /**
  *
- * @author urwah
+ * @author aida
  */
 public class ConcurrentProgramming {
 
@@ -25,11 +27,19 @@ public class ConcurrentProgramming {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int n = 70000; //number of points
-        int t = 5;  // number of threads
-        int m = 3;  // number of seconds to termination
+        
         int count =0;
         double xaxis,yaxis;
+        String points, threads, seconds;
+        
+        points = JOptionPane.showInputDialog("Enter number of points: ");
+		int n = Integer.parseInt(points); //number of points
+				
+		threads = JOptionPane.showInputDialog("Enter number of threads: ");
+		int t = Integer.parseInt(threads); //number of threads
+		
+		seconds = JOptionPane.showInputDialog("Enter number of seconds to termination: ");
+		int m = Integer.parseInt(seconds); //number of seconds to termination
         
         //To stop all the thread if any of the thread fail 20 times
         AtomicBoolean stopCriteria = new AtomicBoolean(false);
@@ -80,6 +90,18 @@ public class ConcurrentProgramming {
         }
         long timeRunning = System.currentTimeMillis()- timeNow;
 
+        Runnable r = new Runnable() {
+            public void run() {
+                LineComponent lineComponent = new LineComponent(1000,1000); //GUI
+                for(String j : success.keySet()){ //Number of edges created
+                    for (int i=1; i<=success.get(j); i++) {
+                    lineComponent.addLine();
+                }}
+                JOptionPane.showMessageDialog(null, lineComponent);
+            }
+        };
+        SwingUtilities.invokeLater(r);
+        
 //        System.out.println(pointArr);
         System.out.println();
         System.out.println("Thread ran for "+timeRunning+"ms\n");
