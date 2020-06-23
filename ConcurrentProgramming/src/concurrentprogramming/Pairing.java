@@ -58,7 +58,7 @@ public class Pairing implements Runnable{
                 pointArr.get(first).isPair.set(true);
                 boolean loop = true;
                 //loop to find an unpaired second point
-                while(loop || !stopCriteria.get()){
+                while(loop && !stopCriteria.get()){
                     //added sleep to give chance to other thread to work
                     try {
                         Thread.sleep(5);
